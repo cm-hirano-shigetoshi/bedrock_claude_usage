@@ -74,9 +74,11 @@ def parse_arguments():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 使用例:
-  %(prog)s 2025-09-12 2025-09-13
+  %(prog)s 2025-09-12 2025-09-13  # テーブル表示 + JSONファイル保存
   %(prog)s 2025-09-12 2025-09-13 --profile myprofile
   %(prog)s 2025-09-12 2025-09-13 --region us-east-1
+  %(prog)s 2025-09-12 2025-09-13 --output my_metrics.json  # カスタムファイルパス
+  %(prog)s 2025-09-12 2025-09-13 --json  # JSON標準出力のみ（ファイル保存なし）
         """,
     )
 
@@ -99,7 +101,14 @@ def parse_arguments():
     parser.add_argument(
         "--json",
         action="store_true",
-        help="JSON形式で詳細データを出力",
+        help="JSON形式で標準出力に表示（ファイル保存なし）",
+    )
+
+    parser.add_argument(
+        "--output",
+        "-o",
+        help="JSON保存先ファイルパス (--jsonなしの場合のデフォルト: bedrock_metrics_YYYYMMDD_YYYYMMDD.json)",
+        default=None,
     )
 
     return parser.parse_args()
@@ -212,8 +221,8 @@ def calculate_cost(token_count: int, metric_name: str, model_id: str = None) -> 
 
 def format_output_json(
     all_models_metrics: dict, start_date: str, end_date: str
-) -> None:
-    """JSON形式で詳細データを出力"""
+) -> dict:
+    """JSON形式で詳細データを構築して返す"""
 
     # 日付ごと、モデルごとにデータを整理
     by_date = {}
@@ -347,8 +356,7 @@ def format_output_json(
         "by_date": by_date_list,
     }
 
-    # JSON出力
-    print(json.dumps(output_data, indent=2, ensure_ascii=False))
+    return output_data
 
 
 def format_output(all_models_metrics: dict):
@@ -534,9 +542,37 @@ def main():
 
         # 出力形式を選択
         if args.json:
-            format_output_json(all_models_metrics, args.start_date, args.end_date)
+            # JSON形式で標準出力に表示（ファイル保存なし）
+            json_data = format_output_json(
+                all_models_metrics, args.start_date, args.end_date
+            )
+            print(json.dumps(json_data, indent=2, ensure_ascii=False))
         else:
+            # テーブル形式で標準出力に表示 + JSONファイルに保存
             format_output(all_models_metrics)
+
+            # JSONデータを生成
+            json_data = format_output_json(
+                all_models_metrics, args.start_date, args.end_date
+            )
+
+            # デフォルトのファイルパスを生成
+            if args.output is None:
+                # 日付からファイル名を生成 (bedrock_metrics_20250912_20250913.json)
+                start_compact = args.start_date.replace("-", "")
+                end_compact = args.end_date.replace("-", "")
+                output_file = f"bedrock_metrics_{start_compact}_{end_compact}.json"
+            else:
+                output_file = args.output
+
+            # JSON ファイルに保存
+            try:
+                with open(output_file, "w", encoding="utf-8") as f:
+                    json.dump(json_data, f, indent=2, ensure_ascii=False)
+                print(f"\nJSONデータを保存しました: {output_file}", file=sys.stderr)
+            except IOError as e:
+                print(f"\nファイル保存エラー: {e}", file=sys.stderr)
+                sys.exit(1)
 
     except ValueError as e:
         print(f"エラー: {e}", file=sys.stderr)
