@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bedrock-metrics"
+version = "0.1.0"
+description = "AWS Bedrock CloudWatch メトリクス取得CLIツール"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+keywords = ["aws", "bedrock", "cloudwatch", "metrics", "cli"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: System :: Monitoring",
+]
+dependencies = [
+    "boto3>=1.26.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/YOUR_USERNAME/bedrock-metrics"
+Repository = "https://github.com/YOUR_USERNAME/bedrock-metrics"
+Issues = "https://github.com/YOUR_USERNAME/bedrock-metrics/issues"
+
+[project.scripts]
+bedrock-metrics = "bedrock_metrics.cli:main"
+
+[tool.setuptools]
+packages = ["bedrock_metrics"]
+
+[tool.setuptools.package-data]
+bedrock_metrics = ["models_config.json"]

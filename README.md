@@ -19,21 +19,41 @@ AWS Bedrockの各種トークンメトリクスをCloudWatchから取得するCL
 
 ## 必要要件
 
-- Python 3.7以上
+- Python 3.8以上
 - boto3
 
 ## インストール
 
+### GitHubから直接インストール
+
 ```bash
-pip install -r requirements.txt
+pip install git+https://github.com/YOUR_USERNAME/bedrock-metrics.git
+```
+
+### ローカルにクローンしてインストール
+
+```bash
+git clone https://github.com/YOUR_USERNAME/bedrock-metrics.git
+cd bedrock-metrics
+pip install .
+```
+
+### 開発モードでインストール（編集可能モード）
+
+```bash
+git clone https://github.com/YOUR_USERNAME/bedrock-metrics.git
+cd bedrock-metrics
+pip install -e .
 ```
 
 ## 使用方法
 
+インストール後は `bedrock-metrics` コマンドが使用できます。
+
 ### 基本的な使い方
 
 ```bash
-python bedrock_metrics.py <開始日> <終了日>
+bedrock-metrics <開始日> <終了日>
 ```
 
 ### 対象モデルと料金設定
@@ -74,28 +94,32 @@ python bedrock_metrics.py <開始日> <終了日>
 
 - `--profile`: AWSプロファイル名 (デフォルト: `AWS_PROFILE`環境変数)
 - `--region`: AWSリージョン (デフォルト: `AWS_DEFAULT_REGION`環境変数)
-- `--json`: JSON形式で詳細データを出力
+- `--json`: JSON形式で標準出力に表示（ファイル保存なし）
+- `--output`, `-o`: JSON保存先ファイルパス（`--json`なしの場合のデフォルト: `bedrock_metrics_YYYYMMDD_YYYYMMDD.json`）
 
 ### 使用例
 
 ```bash
-# 基本的な使用（テーブル形式）
-python bedrock_metrics.py 2025-09-12 2025-09-13
+# 基本的な使用（テーブル形式 + JSONファイル保存）
+bedrock-metrics 2025-09-12 2025-09-13
 
-# JSON形式で出力
-python bedrock_metrics.py 2025-09-12 2025-09-13 --json
+# JSON形式で標準出力に表示（ファイル保存なし）
+bedrock-metrics 2025-09-12 2025-09-13 --json
 
 # JSON出力をファイルに保存
-python bedrock_metrics.py 2025-09-12 2025-09-13 --json > metrics.json
+bedrock-metrics 2025-09-12 2025-09-13 --json > metrics.json
+
+# カスタムファイルパスでJSON保存
+bedrock-metrics 2025-09-12 2025-09-13 --output my_metrics.json
 
 # プロファイルを指定
-python bedrock_metrics.py 2025-09-12 2025-09-13 --profile myprofile
+bedrock-metrics 2025-09-12 2025-09-13 --profile myprofile
 
 # リージョンを指定
-python bedrock_metrics.py 2025-09-12 2025-09-13 --region us-east-1
+bedrock-metrics 2025-09-12 2025-09-13 --region us-east-1
 
 # 複数オプションを組み合わせ
-python bedrock_metrics.py 2025-09-12 2025-09-13 --json --profile myprofile --region us-west-2
+bedrock-metrics 2025-09-12 2025-09-13 --json --profile myprofile --region us-west-2
 ```
 
 ### 環境変数での設定
@@ -105,7 +129,7 @@ AWSプロファイルとリージョンは環境変数でも設定できます:
 ```bash
 export AWS_PROFILE=myprofile
 export AWS_DEFAULT_REGION=us-east-1
-python bedrock_metrics.py 2025-09-12 2025-09-13
+bedrock-metrics 2025-09-12 2025-09-13
 ```
 
 ## 出力例
@@ -326,7 +350,7 @@ Total        |  7,105.0k ($ 21.32) |  3,004.2k ($ 45.06) |    9.63M ($ 36.12) | 
 設定ファイルが見つかりません: /path/to/models_config.json
 ```
 
-`bedrock_metrics.py` と同じディレクトリに `models_config.json` を作成してください。
+パッケージインストール後は、設定ファイルはパッケージ内に含まれています。カスタム設定を使用したい場合は、実行ディレクトリに `models_config.json` を配置してください。
 
 ### 認証エラーの場合
 
