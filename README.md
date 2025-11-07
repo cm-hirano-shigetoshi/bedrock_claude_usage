@@ -1,6 +1,6 @@
-# AWS Bedrock CloudWatch メトリクス取得ツール
+# AWS Bedrock Claude使用量取得ツール
 
-AWS Bedrockの各種トークンメトリクスをCloudWatchから取得するCLIツールです。
+AWS Bedrock Claudeの各種トークンメトリクスをCloudWatchから取得するCLIツールです。
 
 ## 機能
 
@@ -27,33 +27,33 @@ AWS Bedrockの各種トークンメトリクスをCloudWatchから取得するCL
 ### GitHubから直接インストール
 
 ```bash
-pip install git+https://github.com/YOUR_USERNAME/bedrock-metrics.git
+pip install git+https://github.com/YOUR_USERNAME/bedrock_claude_usage.git
 ```
 
 ### ローカルにクローンしてインストール
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/bedrock-metrics.git
-cd bedrock-metrics
+git clone https://github.com/YOUR_USERNAME/bedrock_claude_usage.git
+cd bedrock_claude_usage
 pip install .
 ```
 
 ### 開発モードでインストール（編集可能モード）
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/bedrock-metrics.git
-cd bedrock-metrics
+git clone https://github.com/YOUR_USERNAME/bedrock_claude_usage.git
+cd bedrock_claude_usage
 pip install -e .
 ```
 
 ## 使用方法
 
-インストール後は `bedrock-metrics` コマンドが使用できます。
+インストール後は `bedrock_claude_usage` コマンドが使用できます。
 
 ### 基本的な使い方
 
 ```bash
-bedrock-metrics <開始日> <終了日>
+bedrock_claude_usage <開始日> <終了日>
 ```
 
 ### 対象モデルと料金設定
@@ -95,31 +95,31 @@ bedrock-metrics <開始日> <終了日>
 - `--profile`: AWSプロファイル名 (デフォルト: `AWS_PROFILE`環境変数)
 - `--region`: AWSリージョン (デフォルト: `AWS_DEFAULT_REGION`環境変数)
 - `--json`: JSON形式で標準出力に表示（ファイル保存なし）
-- `--output`, `-o`: JSON保存先ファイルパス（`--json`なしの場合のデフォルト: `bedrock_metrics_YYYYMMDD_YYYYMMDD.json`）
+- `--output`, `-o`: JSON保存先ファイルパス（`--json`なしの場合のデフォルト: `bedrock_claude_usage_YYYYMMDD_YYYYMMDD.json`）
 
 ### 使用例
 
 ```bash
 # 基本的な使用（テーブル形式 + JSONファイル保存）
-bedrock-metrics 2025-09-12 2025-09-13
+bedrock_claude_usage 2025-09-12 2025-09-13
 
 # JSON形式で標準出力に表示（ファイル保存なし）
-bedrock-metrics 2025-09-12 2025-09-13 --json
+bedrock_claude_usage 2025-09-12 2025-09-13 --json
 
 # JSON出力をファイルに保存
-bedrock-metrics 2025-09-12 2025-09-13 --json > metrics.json
+bedrock_claude_usage 2025-09-12 2025-09-13 --json > metrics.json
 
 # カスタムファイルパスでJSON保存
-bedrock-metrics 2025-09-12 2025-09-13 --output my_metrics.json
+bedrock_claude_usage 2025-09-12 2025-09-13 --output my_metrics.json
 
 # プロファイルを指定
-bedrock-metrics 2025-09-12 2025-09-13 --profile myprofile
+bedrock_claude_usage 2025-09-12 2025-09-13 --profile myprofile
 
 # リージョンを指定
-bedrock-metrics 2025-09-12 2025-09-13 --region us-east-1
+bedrock_claude_usage 2025-09-12 2025-09-13 --region us-east-1
 
 # 複数オプションを組み合わせ
-bedrock-metrics 2025-09-12 2025-09-13 --json --profile myprofile --region us-west-2
+bedrock_claude_usage 2025-09-12 2025-09-13 --json --profile myprofile --region us-west-2
 ```
 
 ### 環境変数での設定
@@ -129,7 +129,7 @@ AWSプロファイルとリージョンは環境変数でも設定できます:
 ```bash
 export AWS_PROFILE=myprofile
 export AWS_DEFAULT_REGION=us-east-1
-bedrock-metrics 2025-09-12 2025-09-13
+bedrock_claude_usage 2025-09-12 2025-09-13
 ```
 
 ## 出力例

@@ -1,4 +1,4 @@
-"""AWS Bedrock CloudWatch メトリクス取得パッケージ"""
+"""AWS Bedrock Claude使用量取得パッケージ"""
 
 __version__ = "0.1.0"
 

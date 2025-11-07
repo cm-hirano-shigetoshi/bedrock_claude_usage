@@ -3,16 +3,16 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "bedrock-metrics"
+name = "bedrock_claude_usage"
 version = "0.1.0"
-description = "AWS Bedrock CloudWatch メトリクス取得CLIツール"
+description = "AWS Bedrock Claude使用量取得CLIツール"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
     {name = "Your Name", email = "your.email@example.com"}
 ]
-keywords = ["aws", "bedrock", "cloudwatch", "metrics", "cli"]
+keywords = ["aws", "bedrock", "claude", "cloudwatch", "metrics", "cli", "usage"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -30,15 +30,15 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/YOUR_USERNAME/bedrock-metrics"
-Repository = "https://github.com/YOUR_USERNAME/bedrock-metrics"
-Issues = "https://github.com/YOUR_USERNAME/bedrock-metrics/issues"
+Homepage = "https://github.com/YOUR_USERNAME/bedrock_claude_usage"
+Repository = "https://github.com/YOUR_USERNAME/bedrock_claude_usage"
+Issues = "https://github.com/YOUR_USERNAME/bedrock_claude_usage/issues"
 
 [project.scripts]
-bedrock-metrics = "bedrock_metrics.cli:main"
+bedrock_claude_usage = "bedrock_claude_usage.cli:main"
 
 [tool.setuptools]
-packages = ["bedrock_metrics"]
+packages = ["bedrock_claude_usage"]
 
 [tool.setuptools.package-data]
-bedrock_metrics = ["models_config.json"]
+bedrock_claude_usage = ["models_config.json"]

@@ -107,7 +107,7 @@ def parse_arguments():
     parser.add_argument(
         "--output",
         "-o",
-        help="JSON保存先ファイルパス (--jsonなしの場合のデフォルト: bedrock_metrics_YYYYMMDD_YYYYMMDD.json)",
+        help="JSON保存先ファイルパス (--jsonなしの場合のデフォルト: bedrock_claude_usage_YYYYMMDD_YYYYMMDD.json)",
         default=None,
     )
 
@@ -558,10 +558,10 @@ def main():
 
             # デフォルトのファイルパスを生成
             if args.output is None:
-                # 日付からファイル名を生成 (bedrock_metrics_20250912_20250913.json)
+                # 日付からファイル名を生成 (bedrock_claude_usage_20250912_20250913.json)
                 start_compact = args.start_date.replace("-", "")
                 end_compact = args.end_date.replace("-", "")
-                output_file = f"bedrock_metrics_{start_compact}_{end_compact}.json"
+                output_file = f"bedrock_claude_usage_{start_compact}_{end_compact}.json"
             else:
                 output_file = args.output
 
