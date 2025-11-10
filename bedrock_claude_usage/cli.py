@@ -569,6 +569,7 @@ def main():
             try:
                 with open(output_file, "w", encoding="utf-8") as f:
                     json.dump(json_data, f, indent=2, ensure_ascii=False)
+                print("※ 料金はロングコンテキストを利用していない前提です", file=sys.stderr)
                 print(f"\nJSONデータを保存しました: {output_file}", file=sys.stderr)
             except IOError as e:
                 print(f"\nファイル保存エラー: {e}", file=sys.stderr)
